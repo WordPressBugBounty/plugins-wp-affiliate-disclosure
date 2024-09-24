@@ -1,0 +1,1 @@
+# plugins-wp-affiliate-disclosure
