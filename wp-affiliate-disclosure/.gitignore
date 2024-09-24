@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+.sass-cache
+assets/js/core.js
+freemius/.git
+freemius/.codeclimate.yml
+freemius/.github
+freemius/.travis.yml
+freemius/gulpfile.js
+freemius/composer.json

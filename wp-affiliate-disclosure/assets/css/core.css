@@ -1,0 +1,20 @@
+#wpadc-wrapper *, #wpadc-wrapper *:before, #wpadc-wrapper *:after,
+.wpadc-modal *,
+.wpadc-modal *:before,
+.wpadc-modal *:after,
+#wpadc-builder *,
+#wpadc-builder *:before,
+#wpadc-builder *:after {
+  box-sizing: border-box; }
+
+.wpadc-wrapper-class.wpadc-selected-before-content {
+  margin-bottom: 15px; }
+
+.wpadc-wrapper-class.wpadc-selected-after-content {
+  margin-top: 15px; }
+
+/* MISC */
+.wpadc-clear {
+  display: table;
+  content: " ";
+  clear: both; }

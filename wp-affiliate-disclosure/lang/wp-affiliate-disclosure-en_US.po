@@ -1,0 +1,467 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Affiliate Disclosure\n"
+"POT-Creation-Date: 2019-01-23 15:49+0800\n"
+"PO-Revision-Date: 2019-01-23 15:49+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: ../../../../../wamp/www/layers/wp-content/plugins/wp-"
+"affiliate-disclosure\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+
+#: builder/builder-helpers.php:35 builder/builder-helpers.php:212
+#: builder/settings-page/views/form.php:35
+msgid "This post contains affiliate links."
+msgstr ""
+
+#: builder/builder-helpers.php:211 builder/start-wizard/controller.php:117
+msgid "Affiliate Disclosure Statement"
+msgstr ""
+
+#: builder/builder/model.php:43 builder/builder/model.php:44
+#: builder/builder/model.php:45 builder/builder/model.php:46
+msgid "Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:47 builder/builder/model.php:48
+msgid "Add New Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:49
+msgid "Edit Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:50 builder/settings-page/controller.php:260
+#: builder/settings-page/view.php:109
+msgid "Edit"
+msgstr ""
+
+#: builder/builder/model.php:51
+msgid "New Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:52 builder/builder/model.php:56
+msgid "View Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:53
+msgid "Search Affiliate Disclosure"
+msgstr ""
+
+#: builder/builder/model.php:54
+msgid "No Affiliate Disclosure Found"
+msgstr ""
+
+#: builder/builder/model.php:55
+msgid "No Affiliate Disclosure found in Trash"
+msgstr ""
+
+#: builder/settings-page/controller.php:101
+#: builder/settings-page/controller.php:102
+#: includes/class-wp-affiliate-disclosure.php:143
+#: includes/widgets/widget.php:17
+msgid "WP Affiliate Disclosure"
+msgstr ""
+
+#: builder/settings-page/controller.php:119
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: builder/settings-page/controller.php:138
+msgid "Overview"
+msgstr ""
+
+#: builder/settings-page/controller.php:142
+msgid "WP Affiliate Disclosure - Configuration Wizard"
+msgstr ""
+
+#: builder/settings-page/controller.php:146
+msgid "Edit Rule"
+msgstr ""
+
+#: builder/settings-page/controller.php:257
+#, php-format
+msgid "\"%s\" has been successfully created!"
+msgstr ""
+
+#: builder/settings-page/controller.php:257
+msgid "Click the \"Edit\" button below to edit your item"
+msgstr ""
+
+#: builder/settings-page/controller.php:259
+msgid "Close"
+msgstr ""
+
+#: builder/settings-page/controller.php:267
+msgid "Please insert a name."
+msgstr ""
+
+#: builder/settings-page/controller.php:273
+#: builder/settings-page/controller.php:307
+msgid "Something just went wrong! Please try again."
+msgstr ""
+
+#: builder/settings-page/controller.php:304
+msgid "Settings Saved!"
+msgstr ""
+
+#: builder/settings-page/view.php:65 builder/settings-page/view.php:353
+msgid "Add New Rule"
+msgstr ""
+
+#: builder/settings-page/view.php:94
+msgid "Name"
+msgstr ""
+
+#: builder/settings-page/view.php:95 builder/settings-page/views/form.php:185
+msgid "Priority"
+msgstr ""
+
+#: builder/settings-page/view.php:96
+msgid "Actions"
+msgstr ""
+
+#: builder/settings-page/view.php:110 builder/settings-page/view.php:396
+msgid "Delete"
+msgstr ""
+
+#: builder/settings-page/view.php:117
+msgid "No rule(s) added yet."
+msgstr ""
+
+#: builder/settings-page/view.php:147
+msgid "Go back"
+msgstr ""
+
+#: builder/settings-page/view.php:185
+msgid "Need Help? "
+msgstr ""
+
+#: builder/settings-page/view.php:185
+msgid "Click here to start the configuration wizard."
+msgstr ""
+
+#: builder/settings-page/view.php:359
+msgid "Enter a name below"
+msgstr ""
+
+#: builder/settings-page/view.php:360
+msgid "( e.g. Apple Orange Banana )"
+msgstr ""
+
+#: builder/settings-page/view.php:369 builder/settings-page/view.php:395
+msgid "Cancel"
+msgstr ""
+
+#: builder/settings-page/view.php:370
+msgid "Create"
+msgstr ""
+
+#: builder/settings-page/view.php:391
+#, php-format
+msgid "Are you sure you want to delete \"%s\"?"
+msgstr ""
+
+#: builder/settings-page/view.php:392
+msgid "You will not be able to recover it"
+msgstr ""
+
+#: builder/settings-page/view.php:423
+msgid "You reached the limits of your plan!"
+msgstr ""
+
+#: builder/settings-page/view.php:425
+#, php-format
+msgid ""
+"On the %s plan, you can only have one rule active at a time. To create more "
+"rules, please consider to upgrade your plan to %s."
+msgstr ""
+
+#: builder/settings-page/view.php:425
+msgid "Free"
+msgstr ""
+
+#: builder/settings-page/view.php:425
+msgid "Premium"
+msgstr ""
+
+#: builder/settings-page/view.php:428
+msgid "Upgrade Now"
+msgstr ""
+
+#: builder/settings-page/view.php:430
+msgid "Nah, I'll stick with just one rule for now"
+msgstr ""
+
+#: builder/settings-page/views/form.php:19
+msgid "General"
+msgstr ""
+
+#: builder/settings-page/views/form.php:22
+msgid "Rule Name"
+msgstr ""
+
+#: builder/settings-page/views/form.php:31 builder/start-wizard/model.php:70
+msgid "Disclosure Statement"
+msgstr ""
+
+#: builder/settings-page/views/form.php:45
+msgid "Show Statement At"
+msgstr ""
+
+#: builder/settings-page/views/form.php:48
+#: builder/start-wizard/views/step_4.php:23
+msgid "Before Post Content"
+msgstr ""
+
+#: builder/settings-page/views/form.php:49
+#: builder/start-wizard/views/step_4.php:24
+msgid "After Post Content"
+msgstr ""
+
+#: builder/settings-page/views/form.php:54
+#: builder/settings-page/views/form.php:72
+#: builder/start-wizard/views/step_4.php:29
+msgid "Shortcode"
+msgstr ""
+
+#: builder/settings-page/views/form.php:55
+#: builder/start-wizard/views/step_4.php:30
+msgid "Widget"
+msgstr ""
+
+#: builder/settings-page/views/form.php:61
+#: builder/settings-page/views/form.php:101
+#: builder/start-wizard/views/step_4.php:36
+#: builder/start-wizard/views/step_5.php:36
+msgid "*selection of multiple options is allowed"
+msgstr ""
+
+#: builder/settings-page/views/form.php:87
+msgid "Conditions"
+msgstr ""
+
+#: builder/settings-page/views/form.php:94
+msgid "Selected Post Type(s)"
+msgstr ""
+
+#: builder/settings-page/views/form.php:109
+#: builder/settings-page/views/form.php:123
+msgid "Selected Post Type"
+msgstr ""
+
+#: builder/settings-page/views/form.php:136
+msgid "Post Type Condition"
+msgstr ""
+
+#: builder/settings-page/views/form.php:139
+#: builder/start-wizard/views/step_6.php:23
+msgid "Show on All"
+msgstr ""
+
+#: builder/settings-page/views/form.php:140
+#: builder/start-wizard/views/step_6.php:24
+msgid "Only Show on Selected Taxonomies (categories / tags )"
+msgstr ""
+
+#: builder/settings-page/views/form.php:141
+#: builder/start-wizard/views/step_6.php:25
+msgid "Only Show on Selected Post(s)"
+msgstr ""
+
+#: builder/settings-page/views/form.php:147
+#: builder/start-wizard/views/step_6.php:31
+msgid "Please insert taxonomy slug(s) below: "
+msgstr ""
+
+#: builder/settings-page/views/form.php:148
+msgid ""
+"Each taxonomy slug must be separated by comma - Ex: slug-1,slug-2,slug-3"
+msgstr ""
+
+#: builder/settings-page/views/form.php:153
+#: builder/start-wizard/views/step_6.php:39
+msgid "Need help locating the correct slug?"
+msgstr ""
+
+#: builder/settings-page/views/form.php:155
+#: builder/start-wizard/views/step_6.php:41
+msgid ""
+"If you need to find the slug of a category, simply go to Posts > Categories, "
+"and you should see the 'slug column' in the category table."
+msgstr ""
+
+#: builder/settings-page/views/form.php:164
+#: builder/start-wizard/views/step_6.php:50
+msgid "Please insert post ID(s) below:"
+msgstr ""
+
+#: builder/settings-page/views/form.php:165
+#: builder/start-wizard/views/step_6.php:53
+msgid "Each Post ID must be separated by comma - Ex: 1,2,3"
+msgstr ""
+
+#: builder/settings-page/views/form.php:170
+#: builder/start-wizard/views/step_6.php:58
+msgid "Need help locating the post ID?"
+msgstr ""
+
+#: builder/settings-page/views/form.php:172
+#: builder/start-wizard/views/step_6.php:60
+msgid ""
+"In the edit post screen, look at the URL in your web browser. The post ID is "
+"the number in the URL."
+msgstr ""
+
+#: builder/settings-page/views/form.php:188
+msgid "The lower the number, the higher the priority"
+msgstr ""
+
+#: builder/settings-page/views/form.php:196
+msgid "Save Changes"
+msgstr ""
+
+#: builder/start-wizard/model.php:62
+msgid "Welcome"
+msgstr ""
+
+#: builder/start-wizard/model.php:66 builder/start-wizard/views/step_2.php:13
+msgid "Name Your Rule"
+msgstr ""
+
+#: builder/start-wizard/model.php:74
+msgid "Select a Location"
+msgstr ""
+
+#: builder/start-wizard/model.php:78 builder/start-wizard/views/step_5.php:18
+msgid "Select a Post Type"
+msgstr ""
+
+#: builder/start-wizard/model.php:82 builder/start-wizard/views/step_6.php:13
+msgid "Select a Condition"
+msgstr ""
+
+#: builder/start-wizard/view.php:71
+msgid "Close Wizard"
+msgstr ""
+
+#: builder/start-wizard/views/step_1.php:13
+msgid "Configure WP Affiliate Disclosure in a few steps"
+msgstr ""
+
+#: builder/start-wizard/views/step_1.php:16
+msgid ""
+"Welcome to WP Affiliate Disclosure configuration wizard. In a few steps, "
+"we'll help you setup your affiliate disclosure statement, and show it across "
+"your website."
+msgstr ""
+
+#: builder/start-wizard/views/step_1.php:28
+msgid "Let's Get Started"
+msgstr ""
+
+#: builder/start-wizard/views/step_2.php:16
+msgid "Give your rule a name - this is for your reference only."
+msgstr ""
+
+#: builder/start-wizard/views/step_2.php:32
+#: builder/start-wizard/views/step_3.php:37
+#: builder/start-wizard/views/step_4.php:47
+#: builder/start-wizard/views/step_5.php:70
+#: builder/start-wizard/views/step_6.php:75
+msgid "Previous"
+msgstr ""
+
+#: builder/start-wizard/views/step_2.php:33
+#: builder/start-wizard/views/step_3.php:38
+#: builder/start-wizard/views/step_4.php:48
+#: builder/start-wizard/views/step_5.php:71
+msgid "Next"
+msgstr ""
+
+#: builder/start-wizard/views/step_3.php:13
+msgid "Insert Your Disclosure Statement"
+msgstr ""
+
+#: builder/start-wizard/views/step_3.php:16
+msgid ""
+"You can add links, images, as well as HTML elements into the disclosure "
+"statement"
+msgstr ""
+
+#: builder/start-wizard/views/step_4.php:13
+msgid "Where to Display Your Disclosure Statement."
+msgstr ""
+
+#: builder/start-wizard/views/step_4.php:16
+msgid ""
+"Please select one (or multiple) location to display your affiliate "
+"disclosure statement."
+msgstr ""
+
+#: builder/start-wizard/views/step_5.php:21
+msgid "Please select which post to show your disclosure statement."
+msgstr ""
+
+#: builder/start-wizard/views/step_6.php:16
+msgid ""
+"You can choose to show your affiliate disclosure statement on all posts, or "
+"filter based on specific categories / tags, or specify to display only on "
+"certain posts"
+msgstr ""
+
+#: builder/start-wizard/views/step_6.php:34
+msgid "Each slug must be separated by comma - Ex: slug-1,slug-2,slug-3"
+msgstr ""
+
+#: builder/start-wizard/views/step_6.php:76
+msgid "Done"
+msgstr ""
+
+#: includes/class-wp-affiliate-disclosure.php:218
+#: includes/class-wp-affiliate-disclosure.php:229
+msgid "Loading..."
+msgstr ""
+
+#: includes/class-wp-affiliate-disclosure.php:221
+msgid "Processing..."
+msgstr ""
+
+#: includes/class-wp-affiliate-disclosure.php:222
+msgid "Configuration Done!"
+msgstr ""
+
+#: includes/class-wp-affiliate-disclosure.php:226
+#: includes/class-wp-affiliate-disclosure.php:230
+msgid "Updating..."
+msgstr ""
+
+#: includes/class-wp-affiliate-disclosure.php:231
+msgid "Are you sure you want to remove this content?"
+msgstr ""
+
+#: includes/help.php:23
+msgid "WP Affiliate Disclosure - Help & Support"
+msgstr ""
+
+#: includes/help.php:24
+msgid "Help"
+msgstr ""
+
+#: includes/widgets/widget.php:18
+msgid ""
+"Display FTC-compliant disclosure statement based on the rule(s) defined."
+msgstr ""
+
+#: includes/widgets/widget.php:53
+msgid "Disclosure"
+msgstr ""
