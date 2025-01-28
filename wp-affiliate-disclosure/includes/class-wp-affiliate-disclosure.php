@@ -7,73 +7,77 @@
  * @package 	includes
  * 
  */
-
 if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
-    class WPAffiliateDisclosure
-    {
+    class WPAffiliateDisclosure {
         /**
          * Class instance
          *
          * @access private
          * @var object
          */
-        private static  $_instance = null ;
+        private static $_instance = null;
+
         /**
          * Absolute url to plugin's directory 
          *
          * @access private
          * @var string
          */
-        private  $_plugin_url = null ;
+        private $_plugin_url = null;
+
         /**
          * Absolute path to plugin's directory 
          *
          * @access private
          * @var string
          */
-        private  $_plugin_path = null ;
+        private $_plugin_path = null;
+
         /**
          * Plugin hook prefix ( for filter & action hooks )
          *
          * @access private
          * @var string
          */
-        private  $_plugin_hook = null ;
+        private $_plugin_hook = null;
+
         /**
          * Plugin metabox prefix
          *
          * @access private
          * @var string
          */
-        private  $_plugin_meta_prefix = null ;
+        private $_plugin_meta_prefix = null;
+
         /**
          * Plugin option id
          *
          * @access private
          * @var string
          */
-        private  $_plugin_options = null ;
+        private $_plugin_options = null;
+
         /**
          * Plugin labels
          *
          * @access private
          * @var array
          */
-        private  $_labels = null ;
+        private $_labels = null;
+
         /**
          * Get class instance
          *
          * @access public
          * @return object
          */
-        public static function get_instance()
-        {
+        public static function get_instance() {
             if ( is_null( self::$_instance ) ) {
                 self::$_instance = new WPAffiliateDisclosure();
             }
             return self::$_instance;
         }
-        
+
         /**
          * Retrieve plugin path
          *
@@ -81,11 +85,10 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
          * @param string $path (optional) - appended into plugin directory
          * @return string
          */
-        public function plugin_path( $path = '' )
-        {
+        public function plugin_path( $path = '' ) {
             return $this->_plugin_path . ltrim( $path, '/' );
         }
-        
+
         /**
          * Retrieve plugin url
          *
@@ -93,65 +96,59 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
          * @param string $url (optional) - appended into plugin directory
          * @return string
          */
-        public function plugin_url( $url = '' )
-        {
+        public function plugin_url( $url = '' ) {
             return $this->_plugin_url . ltrim( $url, '/' );
         }
-        
+
         /**
          * Get plugin hook (for filter & action hooks )
          *
          * @access public
          * @return string
          */
-        public function plugin_hook()
-        {
+        public function plugin_hook() {
             return $this->_plugin_hook;
         }
-        
+
         /**
          * Get plugin metabox prefix
          *
          * @access public
          * @return string
          */
-        public function plugin_meta_prefix()
-        {
+        public function plugin_meta_prefix() {
             return $this->_plugin_meta_prefix;
         }
-        
+
         /**
          * Get plugin option id
          *
          * @access public
          * @return string
          */
-        public function plugin_options()
-        {
+        public function plugin_options() {
             return $this->_plugin_options;
         }
-        
+
         /**
          * Get plugin labels
          *
          * @access public
          * @return array
          */
-        public function plugin_labels()
-        {
+        public function plugin_labels() {
             return apply_filters( 'wpadc_plugin_labels', array(
                 'wp-affiliate-disclosure' => __( 'WP Affiliate Disclosure', WPADC_SLUG ),
             ) );
         }
-        
+
         /**
          * Class Constructor
          *
          * @access private
          */
-        function __construct()
-        {
-            global  $wp_affiliate_disclosure_fs ;
+        function __construct() {
+            global $wp_affiliate_disclosure_fs;
             // setup variables
             $this->_plugin_path = WPADC_PATH;
             $this->_plugin_url = WPADC_URL;
@@ -160,19 +157,18 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             $this->_plugin_options = 'wp-affiliate-disclosure';
             $this->_labels = $this->plugin_labels();
             // include required files
-            add_action( 'init', array( &$this, 'includes' ), 0 );
+            add_action( 'init', array(&$this, 'includes'), 0 );
             // enqueue main css & scripts
-            add_action( 'wp_enqueue_scripts', array( &$this, 'register_css' ), 49 );
-            add_action( 'admin_enqueue_scripts', array( &$this, 'register_backend_scripts' ), 49 );
+            add_action( 'wp_enqueue_scripts', array(&$this, 'register_css'), 49 );
+            add_action( 'admin_enqueue_scripts', array(&$this, 'register_backend_scripts'), 49 );
         }
-        
+
         /**
          * Enqueue css
          *
          * @access public
          */
-        public function register_css()
-        {
+        public function register_css() {
             wp_enqueue_style(
                 'font-awesome',
                 $this->plugin_url( 'assets/css/font-awesome.min.css' ),
@@ -186,14 +182,13 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 WPADC_VERSION
             );
         }
-        
+
         /**
          * Enqueue backend css & js
          *
          * @access public
          */
-        public function register_backend_scripts()
-        {
+        public function register_backend_scripts() {
             // wp styles & scripts
             wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_script( 'iris' );
@@ -230,13 +225,13 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             wp_enqueue_script(
                 'wpadc-accordion',
                 $this->plugin_url( 'assets/js/jquery.accordion.js' ),
-                array( 'jquery' ),
+                array('jquery'),
                 '0.0.1'
             );
             wp_enqueue_script(
                 'jquery-magnific-popup',
                 $this->plugin_url( 'assets/js/jquery.magnific-popup.min.js' ),
-                array( 'jquery' ),
+                array('jquery'),
                 '1.1.0'
             );
             wp_enqueue_style(
@@ -248,13 +243,13 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             wp_enqueue_script(
                 'jquery-powertip-131',
                 $this->plugin_url( 'assets/js/jquery.powertip.min.js' ),
-                array( 'jquery' ),
+                array('jquery'),
                 '1.3.1'
             );
             wp_enqueue_script(
                 'wpadc-backend-js',
                 $this->plugin_url( 'assets/js/backend.js' ),
-                array( 'jquery' ),
+                array('jquery'),
                 WPADC_VERSION
             );
             wp_localize_script( 'wpadc-backend-js', 'WPADCB_AJAX', apply_filters( $this->plugin_hook() . 'backend_localize_args', array(
@@ -278,14 +273,13 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 'deleteContent'        => __( "Are you sure you want to remove this content?", WPADC_SLUG ),
             ) ) );
         }
-        
+
         /**
          * Include required files
          *
          * @access public
          */
-        public function includes()
-        {
+        public function includes() {
             // Include builder files ( if use builder )
             require_once $this->plugin_path( 'builder/builder-helpers.php' );
             // include all disclosure statement mvc
@@ -296,7 +290,6 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             require_once $this->plugin_path( 'builder/builder/model.php' );
             require_once $this->plugin_path( 'builder/builder/view.php' );
             require_once $this->plugin_path( 'builder/builder/controller.php' );
-            
             if ( is_admin() ) {
                 // Include all start wizard mvc files
                 require_once $this->plugin_path( 'builder/start-wizard/model.php' );
@@ -309,11 +302,12 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 // add help page
                 require_once $this->plugin_path( 'includes/help.php' );
             }
-        
         }
-    
+
+        /* END
+        	------------------------------------------------------------------- */
     }
+
     // end - class WPAffiliateDisclosure
 }
-
 // end - !class_exists('WPAffiliateDisclosure')

@@ -4,7 +4,7 @@ Contributors: mojofywp
 Requires at least: 4.9.8
 Requires PHP: 5.6
 Tested up to: 6.3.2
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 Tags: affiliate, disclosure, affiliate disclosure, affiliate disclosure statement, disclosure statement, FTC-compliant disclosure, affiliate disclaimer, affiliate disclaimer statement, FTC, FTC disclosure statement
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

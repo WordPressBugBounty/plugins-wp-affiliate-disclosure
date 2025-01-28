@@ -8,14 +8,12 @@
  *
  */
 /* ------------------------------------------------------------------------------- */
-
 if ( !function_exists( 'wpadc_add_help_page' ) ) {
     /**
      * Add Help page
      *
      */
-    function wpadc_add_help_page()
-    {
+    function wpadc_add_help_page() {
         add_submenu_page(
             'wpadc-builder',
             // parent slug
@@ -30,10 +28,9 @@ if ( !function_exists( 'wpadc_add_help_page' ) ) {
             'wpadc_render_help_page'
         );
     }
-    
+
     add_action( 'admin_menu', 'wpadc_add_help_page', 20 );
 }
-
 /* ------------------------------------------------------------------------------- */
 if ( !function_exists( 'wpadc_render_help_page' ) ) {
     /**
@@ -41,9 +38,8 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
      *
      * @return string
      */
-    function wpadc_render_help_page()
-    {
-        global  $wp_affiliate_disclosure_fs ;
+    function wpadc_render_help_page() {
+        global $wp_affiliate_disclosure_fs;
         $version = WPADC_VERSION;
         $active_tab = 'tutorials';
         // get current tab
@@ -59,8 +55,8 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
 <div id="wpadc-help-page" class="wrap about-wrap">
 
 	<h1 class="wpadc-help-header">Welcome to WP Affiliate Disclosure v<?php 
-        echo  $version ;
-        echo  ( $wp_affiliate_disclosure_fs->can_use_premium_code() ? ' <small>PREMIUM Version</small>' : '' ) ;
+        echo $version;
+        echo ( $wp_affiliate_disclosure_fs->can_use_premium_code() ? ' <small>PREMIUM Version</small>' : '' );
         ?></h1>
 
 	<div class="about-text">
@@ -68,22 +64,22 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
 	</div>
 
 	<div class="wp-badge wpadc-help-logo">Version <?php 
-        echo  $version ;
+        echo $version;
         ?></div>
 
 	<h2 class="nav-tab-wrapper">
 		<a href="<?php 
-        echo  esc_url( admin_url( 'admin.php' ) . '?page=wpadc-builder&page=wpadc-help' ) ;
+        echo esc_url( admin_url( 'admin.php' ) . '?page=wpadc-builder&page=wpadc-help' );
         ?>" class="nav-tab<?php 
-        echo  ( $active_tab == 'tutorials' ? ' nav-tab-active' : '' ) ;
+        echo ( $active_tab == 'tutorials' ? ' nav-tab-active' : '' );
         ?>">Tutorials</a>
 		<a href="<?php 
-        echo  esc_url( admin_url( 'admin.php?page=wpadc-builder-contact' ) ) ;
+        echo esc_url( admin_url( 'admin.php?page=wpadc-builder-contact' ) );
         ?>" class="nav-tab">Help & Support</a>
 		<a href="<?php 
-        echo  esc_url( admin_url( 'admin.php' ) . '?page=wpadc-builder&page=wpadc-help&tab=resources' ) ;
+        echo esc_url( admin_url( 'admin.php' ) . '?page=wpadc-builder&page=wpadc-help&tab=resources' );
         ?>" class="nav-tab<?php 
-        echo  ( $active_tab == 'resources' ? ' nav-tab-active' : '' ) ;
+        echo ( $active_tab == 'resources' ? ' nav-tab-active' : '' );
         ?>">Resources</a>
 	</h2>
 
@@ -102,7 +98,7 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
 					<li><a href="https://www.mojofywp.com/wp-affiliate-disclosure" target="_blank" rel="nofollow">About the plugin</a></li>
 					<li><a href="https://www.mojofywp.com/wp-affiliate-disclosure/demo" target="_blank" rel="nofollow">Plugin demo Page</a></li>
 					<li><a href="<?php 
-                echo  esc_url( admin_url( 'admin.php?page=wpadc-builder-contact' ) ) ;
+                echo esc_url( admin_url( 'admin.php?page=wpadc-builder-contact' ) );
                 ?>">Help & Support</a></li>
 					<li><a href="https://www.facebook.com/mojofywp/" target="_blank" rel="nofollow">Facebook Page</a></li>
 				</ul>
@@ -122,7 +118,7 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
                 try {
                     require_once wpadc()->plugin_path( 'includes/help/free_version.php' );
                 } catch ( Exception $e ) {
-                    echo  '<br><br>View Form Error' ;
+                    echo '<br><br>View Form Error';
                 }
                 ?>
 
@@ -135,7 +131,7 @@ if ( !function_exists( 'wpadc_render_help_page' ) ) {
 </div><!-- .wpadc-about-page -->
 <?php 
         $html = ob_get_clean();
-        echo  apply_filters( 'wpadc_render_help_page', ( !empty($html) ? $html : '' ) ) ;
+        echo apply_filters( 'wpadc_render_help_page', ( !empty( $html ) ? $html : '' ) );
     }
 
 }

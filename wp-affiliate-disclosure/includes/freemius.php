@@ -8,10 +8,8 @@
  *
  */
 // Create a helper function for easy SDK access.
-function wp_affiliate_disclosure_fs()
-{
-    global  $wp_affiliate_disclosure_fs ;
-    
+function wp_affiliate_disclosure_fs() {
+    global $wp_affiliate_disclosure_fs;
     if ( !isset( $wp_affiliate_disclosure_fs ) ) {
         // Activate multisite network integration.
         if ( !defined( 'WP_FS__PRODUCT_2803_MULTISITE' ) ) {
@@ -28,14 +26,13 @@ function wp_affiliate_disclosure_fs()
             'has_addons'     => false,
             'has_paid_plans' => true,
             'menu'           => array(
-            'slug'    => 'wpadc-builder',
-            'contact' => false,
-            'support' => false,
-        ),
+                'slug'    => 'wpadc-builder',
+                'contact' => false,
+                'support' => false,
+            ),
             'is_live'        => true,
         ) );
     }
-    
     return $wp_affiliate_disclosure_fs;
 }
 
