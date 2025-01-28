@@ -1,6 +1,6 @@
 <?php /*
 Plugin Name: WP Affiliate Disclosure
-Version: 1.2.9
+Version: 1.2.10
 Plugin URI: https://www.mojofywp.com/wp-affiliate-disclosure
 Description: Automatically add a customizable, FTC-compliant disclosure statement across your WordPress website based on the rule(s) you define.
 Author: MojofyWP
@@ -8,8 +8,8 @@ Author URI: https://www.mojofywp.com
 
 WordPress - 
 Requires at least: 4.9.8
-Tested up to: 6.3.2
-Stable tag: 1.2.9
+Tested up to: 6.7.1
+Stable tag: 1.2.10
 
 Text Domain: wp-affiliate-disclosure
 Domain Path: /langCopyright 2012 - 2025 Smashing Advantage Enterprise.
@@ -48,7 +48,7 @@ if(!defined('WPADC_SLUG')) define( 'WPADC_SLUG', 'wp-affiliate-disclosure' );
 /**
  * Plugin version
  **/
-if(!defined('WPADC_VERSION')) define( 'WPADC_VERSION', '1.2.9' );
+if(!defined('WPADC_VERSION')) define( 'WPADC_VERSION', '1.2.10' );
 
 /**
  * Plugin path
