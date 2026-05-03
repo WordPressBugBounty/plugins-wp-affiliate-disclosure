@@ -52,9 +52,84 @@ if ( !class_exists( 'WPADC_Disclosure_Statement_Model' ) ) {
          * @access public
          * @return string
          */
-        public function get_disclosure_rules() {
+        public function get_disclosure_rules( $explicit_rule_id = 0 ) {
             global $wp_affiliate_disclosure_fs;
             $rules = array();
+            // Explicit rule lookup (shortcode rule="X") — verifies post_type === 'wpadc'.
+            if ( $explicit_rule_id > 0 ) {
+                $post_obj = get_post( $explicit_rule_id );
+                if ( $post_obj && 'wpadc' === $post_obj->post_type && 'publish' === $post_obj->post_status ) {
+                    $priority = wpadcb_get_meta( array(
+                        'id'      => $explicit_rule_id,
+                        'key'     => 'priority',
+                        'default' => 1,
+                    ) );
+                    $rules[$explicit_rule_id] = array(
+                        'id'                      => $explicit_rule_id,
+                        'disclosure_statement'    => wpadcb_get_meta( array(
+                            'id'  => $explicit_rule_id,
+                            'key' => 'disclosure_statement',
+                        ) ),
+                        'statement_position'      => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'statement_position',
+                            'default' => 'before-after-content',
+                        ) ),
+                        'priority'                => intval( $priority ),
+                        'post_type'               => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'post_type',
+                            'default' => 'post',
+                        ) ),
+                        'condition'               => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'condition',
+                            'default' => 'none',
+                        ) ),
+                        'ids'                     => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'ids',
+                            'default' => '',
+                        ) ),
+                        'taxonomies'              => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'taxonomies',
+                            'default' => '',
+                        ) ),
+                        'advanced_filter'         => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'advanced_filter',
+                            'default' => '',
+                        ) ),
+                        'exclude_taxonomies'      => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'exclude_taxonomies',
+                            'default' => '',
+                        ) ),
+                        'excludes_ids'            => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'excludes_ids',
+                            'default' => '',
+                        ) ),
+                        'customize_appearance'    => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'customize_appearance',
+                            'default' => 0,
+                        ) ),
+                        'style_preset'            => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'style_preset',
+                            'default' => '',
+                        ) ),
+                        'content_parent_selector' => wpadcb_get_meta( array(
+                            'id'      => $explicit_rule_id,
+                            'key'     => 'content_parent_selector',
+                            'default' => '.entry-content',
+                        ) ),
+                    );
+                }
+                return apply_filters( $this->_hook_prefix . 'get_disclosure_rules', $rules, $this );
+            }
             $query = new WP_Query(array(
                 'post_type'      => 'wpadc',
                 'post_status'    => 'publish',
@@ -74,51 +149,66 @@ if ( !class_exists( 'WPADC_Disclosure_Statement_Model' ) ) {
                         'default' => 1,
                     ) );
                     $rules[$r_id] = array(
-                        'id'                   => $r_id,
-                        'disclosure_statement' => wpadcb_get_meta( array(
+                        'id'                      => $r_id,
+                        'disclosure_statement'    => wpadcb_get_meta( array(
                             'id'  => $r_id,
                             'key' => 'disclosure_statement',
                         ) ),
-                        'statement_position'   => wpadcb_get_meta( array(
+                        'statement_position'      => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'statement_position',
                             'default' => 'before-after-content',
                         ) ),
-                        'priority'             => intval( $priority ),
-                        'post_type'            => wpadcb_get_meta( array(
+                        'priority'                => intval( $priority ),
+                        'post_type'               => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'post_type',
                             'default' => 'post',
                         ) ),
-                        'condition'            => wpadcb_get_meta( array(
+                        'condition'               => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'condition',
                             'default' => 'none',
                         ) ),
-                        'ids'                  => wpadcb_get_meta( array(
+                        'ids'                     => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'ids',
                             'default' => '',
                         ) ),
-                        'taxonomies'           => wpadcb_get_meta( array(
+                        'taxonomies'              => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'taxonomies',
                             'default' => '',
                         ) ),
-                        'advanced_filter'      => wpadcb_get_meta( array(
+                        'advanced_filter'         => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'advanced_filter',
                             'default' => '',
                         ) ),
-                        'exclude_taxonomies'   => wpadcb_get_meta( array(
+                        'exclude_taxonomies'      => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'exclude_taxonomies',
                             'default' => '',
                         ) ),
-                        'excludes_ids'         => wpadcb_get_meta( array(
+                        'excludes_ids'            => wpadcb_get_meta( array(
                             'id'      => $r_id,
                             'key'     => 'excludes_ids',
                             'default' => '',
+                        ) ),
+                        'customize_appearance'    => wpadcb_get_meta( array(
+                            'id'      => $r_id,
+                            'key'     => 'customize_appearance',
+                            'default' => 0,
+                        ) ),
+                        'style_preset'            => wpadcb_get_meta( array(
+                            'id'      => $r_id,
+                            'key'     => 'style_preset',
+                            'default' => '',
+                        ) ),
+                        'content_parent_selector' => wpadcb_get_meta( array(
+                            'id'      => $r_id,
+                            'key'     => 'content_parent_selector',
+                            'default' => '.entry-content',
                         ) ),
                     );
                 }

@@ -124,7 +124,8 @@ class WPADC_Builder_Settings {
 		$reset_wizard = ( $page == 'getting-started' ? true : false ); // reset wizard process if the page is called manually
 
 		// override if is to run start wizard
-		if ( wpadcb_run_start_wizard() ) {
+		$force_wizard = ( $reset_wizard && isset( $_GET['force'] ) && $_GET['force'] === '1' && current_user_can( 'manage_options' ) );
+		if ( wpadcb_run_start_wizard() || $force_wizard ) {
 			$page = 'getting-started';
 		} else {
 			// if skipped, but pointed to getting-started - then redirect back to overview

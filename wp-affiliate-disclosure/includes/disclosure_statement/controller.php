@@ -87,16 +87,66 @@ class WPADC_Disclosure_Statement {
 	 * Render
 	 *
 	 * @access public
+	 * @param string $selected Position slug being rendered (before-content/after-content/after_p1/after_p2/after_p3/shortcode/widget).
+	 * @param array  $args     Optional overrides:
+	 *                          - rule_id (int)       Render this specific rule (verifies post_type === 'wpadc'). 0 = auto-match.
+	 *                          - override_text (str) Replace the rule's stored disclosure text.
+	 *                          - style_class (str)   Preset class to add (e.g. 'wpadc-preset-banner') — wins over rule's stored preset.
+	 *                          - wrapper_id (str)    Legacy [wpadc id="X"] wrapper id.
+	 *                          - skip_position_check (bool) When true (shortcode path), bypass position-match logic.
 	 */
-	public function render( $selected ) {
+	public function render( $selected, $args = array() ) {
 		global $post, $wp_affiliate_disclosure_fs;
 		$view = new WPADC_Disclosure_Statement_View();
 		$html = '';
-		$rules = $this->_model->get_disclosure_rules();
+
+		$args = wp_parse_args( $args, array(
+			'rule_id' => 0,
+			'override_text' => '',
+			'style_class' => '',
+			'wrapper_id' => '',
+			'skip_position_check' => false,
+		) );
+
+		$rules = $this->_model->get_disclosure_rules( absint( $args['rule_id'] ) );
+
+		// Shortcode / explicit-rule path: bypass position + post-type matching;
+		// just render the rule with overrides applied. Returns first available.
+		if ( ! empty( $args['skip_position_check'] ) ) {
+			foreach ( $rules as $rule ) {
+				$rule['selected']     = $selected;
+				$rule['style_class']  = $args['style_class'];
+				$rule['wrapper_id']   = $args['wrapper_id'];
+				if ( ! empty( $args['override_text'] ) ) {
+					$rule['disclosure_statement'] = $args['override_text'];
+				}
+				if ( ! empty( $rule['disclosure_statement'] ) ) {
+					$html = $view->render_statement( $rule );
+					return $html;
+				}
+			}
+			// No rule matched but override_text was supplied → render synthetic.
+			if ( ! empty( $args['override_text'] ) ) {
+				$synthetic = array(
+					'id'                   => 0,
+					'disclosure_statement' => $args['override_text'],
+					'selected'             => $selected,
+					'style_class'          => $args['style_class'],
+					'wrapper_id'           => $args['wrapper_id'],
+				);
+				return $view->render_statement( $synthetic );
+			}
+			return '';
+		}
 
 		foreach ( $rules as $rule ) {
 
 			$rule['selected'] = $selected;
+			$rule['style_class'] = $args['style_class'];
+			$rule['wrapper_id'] = $args['wrapper_id'];
+			if ( ! empty( $args['override_text'] ) ) {
+				$rule['disclosure_statement'] = $args['override_text'];
+			}
 			$statement_position = ( !empty( $rule[ 'statement_position' ] ) ? explode(',',$rule[ 'statement_position' ]) : array() );
 
 			// if position match

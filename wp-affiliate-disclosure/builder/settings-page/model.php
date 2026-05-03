@@ -211,6 +211,11 @@ class WPADC_Builder_Settings_Model {
 		$status = true;
 		$meta_prefix = wpadc()->plugin_meta_prefix();
 
+		// Sanitize v1.4 styling/template fields prior to persistence (server-side caps).
+		if ( function_exists( 'wpadcb_sanitize_meta_values' ) ) {
+			$values = wpadcb_sanitize_meta_values( $values );
+		}
+
 		// Get type
 		$default = wpadcb_default_meta();
 		$checkboxes = wpadcb_checkbox_meta();

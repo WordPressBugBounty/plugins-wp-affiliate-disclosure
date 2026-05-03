@@ -32,6 +32,63 @@ endif;
 
 /* ------------------------------------------------------------------------------- */
 
+if ( ! function_exists( 'wpadc_sanitize_color' ) ) :
+/**
+ * Sanitize a color value (hex or literal "transparent").
+ *
+ * @param mixed $value Raw color value.
+ * @return string Sanitized color or empty string on failure.
+ */
+function wpadc_sanitize_color( $value ) {
+	if ( class_exists( '\\WPADC\\Styling\\ColorSanitizer' ) ) {
+		return \WPADC\Styling\ColorSanitizer::sanitize( $value );
+	}
+
+	if ( ! is_string( $value ) ) {
+		return '';
+	}
+
+	$value = trim( $value );
+
+	if ( '' === $value ) {
+		return '';
+	}
+
+	if ( 'transparent' === strtolower( $value ) ) {
+		return 'transparent';
+	}
+
+	$hex = sanitize_hex_color( $value );
+
+	return is_string( $hex ) ? $hex : '';
+}
+endif;
+
+/* ------------------------------------------------------------------------------- */
+
+if ( ! function_exists( 'wpadc_clamp_int' ) ) :
+/**
+ * Clamp an integer between min and max bounds.
+ *
+ * @param mixed $value Raw value.
+ * @param int   $min   Minimum.
+ * @param int   $max   Maximum.
+ * @return int
+ */
+function wpadc_clamp_int( $value, $min, $max ) {
+	$value = absint( $value );
+	if ( $value < $min ) {
+		$value = $min;
+	}
+	if ( $value > $max ) {
+		$value = $max;
+	}
+	return $value;
+}
+endif;
+
+/* ------------------------------------------------------------------------------- */
+
 if ( !function_exists('wpadc_kses_it') ) :
 /**
  * Kses it (filter contents)

@@ -183,7 +183,7 @@ class WPADC_Builder_Settings_View {
 	 *
 	 * @access public
 	 */
-	public function render_wizard_message() {
+	public function render_wizard_message( $args = array() ) {
 		ob_start();
 		?>
 		<div style="padding: 20px;">

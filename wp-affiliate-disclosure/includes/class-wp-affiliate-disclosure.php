@@ -155,7 +155,7 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             $this->_plugin_hook = 'wpadc_';
             $this->_plugin_meta_prefix = '_wpadc_';
             $this->_plugin_options = 'wp-affiliate-disclosure';
-            $this->_labels = $this->plugin_labels();
+            $this->_labels = array();
             // include required files
             add_action( 'init', array(&$this, 'includes'), 0 );
             // enqueue main css & scripts
@@ -175,11 +175,19 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 null,
                 '4.7.0'
             );
+            $asset = $this->get_built_asset( 'build/frontend/style', 'assets/css/core.css' );
             wp_enqueue_style(
                 'wp-affiliate-disclosure',
-                $this->plugin_url( 'assets/css/core.css' ),
-                null,
-                WPADC_VERSION
+                $this->plugin_url( $asset['path'] ),
+                $asset['dependencies'],
+                $asset['version']
+            );
+            wp_enqueue_script(
+                'wpadc-frontend',
+                $this->plugin_url( 'assets/js/frontend.js' ),
+                array(),
+                WPADC_VERSION,
+                true
             );
         }
 
@@ -216,11 +224,12 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 null,
                 '1.1.0'
             );
+            $asset = $this->get_built_asset( 'build/admin/style', 'assets/css/backend.min.css' );
             wp_enqueue_style(
                 'wpadc-backend',
-                $this->plugin_url( 'assets/css/backend.min.css' ),
-                null,
-                WPADC_VERSION
+                $this->plugin_url( $asset['path'] ),
+                $asset['dependencies'],
+                $asset['version']
             );
             wp_enqueue_script(
                 'wpadc-accordion',
@@ -249,10 +258,16 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
             wp_enqueue_script(
                 'wpadc-backend-js',
                 $this->plugin_url( 'assets/js/backend.js' ),
-                array('jquery'),
+                array('jquery', 'wp-color-picker'),
                 WPADC_VERSION
             );
+            // v1.4 — Style preset definitions for live preview JS.
+            $style_presets = array();
+            if ( class_exists( '\\WPADC\\Styling\\Presets' ) ) {
+                $style_presets = \WPADC\Styling\Presets::get_all();
+            }
             wp_localize_script( 'wpadc-backend-js', 'WPADCB_AJAX', apply_filters( $this->plugin_hook() . 'backend_localize_args', array(
+                'stylePresets'         => $style_presets,
                 'ajaxUrl'              => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ),
                 'loadingModal'         => '
 						<div class="wpadcb-modal-container">
@@ -272,6 +287,35 @@ if ( !class_exists( 'WPAffiliateDisclosure' ) ) {
                 'updatingBox'          => '<div class="wpadcb-updating-box"><i class="fa fa-spinner fa-pulse"></i>' . __( 'Updating...', WPADC_SLUG ) . '</div>',
                 'deleteContent'        => __( "Are you sure you want to remove this content?", WPADC_SLUG ),
             ) ) );
+        }
+
+        /**
+         * Resolve wp-scripts generated assets while keeping legacy CSS as a source checkout fallback.
+         *
+         * @access private
+         * @param string $build_path Build path without extension.
+         * @param string $fallback_path Legacy CSS path.
+         * @return array
+         */
+        private function get_built_asset( $build_path, $fallback_path ) {
+            $css_path = $build_path . '.css';
+            $asset_path = $build_path . '.asset.php';
+            $asset = array(
+                'path'         => $fallback_path,
+                'dependencies' => array(),
+                'version'      => WPADC_VERSION,
+            );
+            if ( file_exists( $this->plugin_path( $css_path ) ) ) {
+                $asset['path'] = $css_path;
+            }
+            if ( file_exists( $this->plugin_path( $asset_path ) ) ) {
+                $metadata = (include $this->plugin_path( $asset_path ));
+                if ( is_array( $metadata ) ) {
+                    $asset['dependencies'] = ( isset( $metadata['dependencies'] ) && is_array( $metadata['dependencies'] ) ? $metadata['dependencies'] : array() );
+                    $asset['version'] = ( isset( $metadata['version'] ) ? $metadata['version'] : WPADC_VERSION );
+                }
+            }
+            return $asset;
         }
 
         /**

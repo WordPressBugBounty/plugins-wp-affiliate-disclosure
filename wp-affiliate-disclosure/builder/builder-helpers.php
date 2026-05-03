@@ -41,10 +41,96 @@ function wpadcb_default_meta() {
 		'advanced_filter' => 'none',
 		'exclude_taxonomies' => '',
 		'excludes_ids' => '',
-		'priority' => 1
+		'priority' => 1,
+		// v1.4 — styling meta
+		'customize_appearance' => 0,
+		'style_preset' => '',
+		'style_bg_color' => '',
+		'style_text_color' => '',
+		'style_border_color' => '',
+		'style_border_style' => '',
+		'style_border_width' => 0,
+		'style_border_radius' => 0,
+		'style_padding_y' => 0,
+		'style_padding_x' => 0,
+		'style_margin_y' => 0,
+		'style_margin_x' => 0,
+		// v1.4 — template meta
+		'template_id' => '',
+		'template_variant' => '',
+		// v1.5 — after-paragraph parent selector
+		'content_parent_selector' => '.entry-content',
 	);
 
 	return apply_filters( 'wpadcb_default_meta' , $values );
+}
+endif;
+
+/* ------------------------------------------------------------------------------- */
+
+if ( ! function_exists('wpadcb_sanitize_meta_values') ) :
+/**
+ * Sanitize an array of rule meta values (v1.4 styling + template fields).
+ *
+ * Applies caps and color sanitization. Unknown keys pass through untouched
+ * to preserve existing behavior for v1.3 fields.
+ *
+ * @param array $values Raw values keyed by meta name (without prefix).
+ * @return array Sanitized values.
+ */
+function wpadcb_sanitize_meta_values( $values ) {
+	if ( ! is_array( $values ) ) {
+		return $values;
+	}
+
+	$presets        = array( 'minimal', 'boxed', 'banner', 'inline', 'custom', '' );
+	$border_styles  = array( 'solid', 'dashed', 'dotted', 'none', '' );
+	$template_ids   = array( 'amazon', 'ftc', '' );
+	$template_vars  = array( 'short', 'long', '' );
+
+	if ( isset( $values['style_preset'] ) ) {
+		$preset = sanitize_key( $values['style_preset'] );
+		$values['style_preset'] = in_array( $preset, $presets, true ) ? $preset : '';
+	}
+	if ( isset( $values['style_bg_color'] ) ) {
+		$values['style_bg_color'] = wpadc_sanitize_color( $values['style_bg_color'] );
+	}
+	if ( isset( $values['style_text_color'] ) ) {
+		$hex = sanitize_hex_color( $values['style_text_color'] );
+		$values['style_text_color'] = is_string( $hex ) ? $hex : '';
+	}
+	if ( isset( $values['style_border_color'] ) ) {
+		$hex = sanitize_hex_color( $values['style_border_color'] );
+		$values['style_border_color'] = is_string( $hex ) ? $hex : '';
+	}
+	if ( isset( $values['style_border_style'] ) ) {
+		$style = sanitize_key( $values['style_border_style'] );
+		$values['style_border_style'] = in_array( $style, $border_styles, true ) ? $style : '';
+	}
+	if ( isset( $values['style_border_width'] ) ) {
+		$values['style_border_width'] = wpadc_clamp_int( $values['style_border_width'], 0, 10 );
+	}
+	if ( isset( $values['style_border_radius'] ) ) {
+		$values['style_border_radius'] = wpadc_clamp_int( $values['style_border_radius'], 0, 50 );
+	}
+	foreach ( array( 'style_padding_y', 'style_padding_x', 'style_margin_y', 'style_margin_x' ) as $key ) {
+		if ( isset( $values[ $key ] ) ) {
+			$values[ $key ] = wpadc_clamp_int( $values[ $key ], 0, 60 );
+		}
+	}
+	if ( isset( $values['template_id'] ) ) {
+		$tid = sanitize_key( $values['template_id'] );
+		$values['template_id'] = in_array( $tid, $template_ids, true ) ? $tid : '';
+	}
+	if ( isset( $values['template_variant'] ) ) {
+		$tv = sanitize_key( $values['template_variant'] );
+		$values['template_variant'] = in_array( $tv, $template_vars, true ) ? $tv : '';
+	}
+	if ( isset( $values['content_parent_selector'] ) ) {
+		$values['content_parent_selector'] = sanitize_text_field( $values['content_parent_selector'] );
+	}
+
+	return apply_filters( 'wpadcb_sanitize_meta_values', $values );
 }
 endif;
 
@@ -79,8 +165,9 @@ if ( ! function_exists('wpadcb_checkbox_meta') ) :
 function wpadcb_checkbox_meta() {
 
 	$checkboxes = array(
-            'show_sample',
-		);
+		'show_sample',
+		'customize_appearance',
+	);
 	
 	return apply_filters( 'wpadcb_checkbox_meta' , $checkboxes );
 }

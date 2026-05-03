@@ -679,6 +679,213 @@ var WPADC_Backend = new function() {
 		// start wizard
 		jQuery(document).on( "click" , ".wpadcb-startw-action", WPADC_Backend.startWizardAction );
 
+		/* v1.4 — Disclosure Templates
+		---------------------------------------------------------- */
+		jQuery(document).on( "click" , ".wpadcb-template-use-btn", function() {
+			var card = jQuery(this).closest(".wpadcb-template-card");
+			card.find(".wpadcb-template-variant-picker").show();
+			jQuery(this).hide();
+		});
+
+		jQuery(document).on( "click" , ".wpadcb-template-cancel-btn", function() {
+			var card = jQuery(this).closest(".wpadcb-template-card");
+			card.find(".wpadcb-template-variant-picker").hide();
+			card.find(".wpadcb-template-use-btn").show();
+		});
+
+		jQuery(document).on( "click" , ".wpadcb-template-insert-btn", function() {
+			var card = jQuery(this).closest(".wpadcb-template-card"),
+				tplId = card.attr("data-template-id"),
+				editorId = card.attr("data-target-editor"),
+				variant = card.find('input[name^="wpadcb-template-variant-"]:checked').val(),
+				text = (variant === "long") ? card.attr("data-long-text") : card.attr("data-short-text");
+
+			// Read current editor content (TinyMCE if active, else textarea)
+			var existing = "";
+			if ( typeof tinyMCE !== "undefined" && tinyMCE.get(editorId) ) {
+				existing = tinyMCE.get(editorId).getContent({format: "text"}).replace(/\s+/g, "");
+			} else {
+				existing = (jQuery("#" + editorId).val() || "").replace(/\s+/g, "");
+			}
+
+			if ( existing.length > 0 ) {
+				if ( ! window.confirm( "Replace existing text?" ) ) {
+					return;
+				}
+			}
+
+			// Write to editor
+			if ( typeof tinyMCE !== "undefined" && tinyMCE.get(editorId) ) {
+				tinyMCE.get(editorId).setContent( text );
+			}
+			jQuery("#" + editorId).val( text );
+
+			// Persist template metadata
+			jQuery("#wpadcb-field-template_id").val( tplId );
+			jQuery("#wpadcb-field-template_variant").val( variant );
+
+			// Reset card UI
+			card.find(".wpadcb-template-variant-picker").hide();
+			card.find(".wpadcb-template-use-btn").show();
+		});
+
+		/* v1.4 — Appearance presets + live preview
+		---------------------------------------------------------- */
+		var presets = (typeof WPADCB_AJAX !== "undefined" && WPADCB_AJAX.stylePresets) ? WPADCB_AJAX.stylePresets : null;
+		var _applyingPreset = false;
+
+		function setPickerColor( id, value ) {
+			var $el = jQuery( id );
+			try {
+				$el.iris( 'color', value || '' );
+			} catch(e) {
+				$el.val( value || '' ).trigger('change');
+			}
+		}
+
+		function applyPresetToFields( slug ) {
+			if ( ! presets || ! presets[slug] ) return;
+			var p = presets[slug];
+			_applyingPreset = true;
+			setPickerColor( "#wpadcb-field-style_bg_color", p.bg_color || "" );
+			setPickerColor( "#wpadcb-field-style_text_color", p.text_color || "" );
+			setPickerColor( "#wpadcb-field-style_border_color", p.border_color || "" );
+			jQuery("#wpadcb-field-style_border_style").val( p.border_style || "solid" );
+
+			var _numFields = {
+				"style_border_width":  p.border_width  != null ? p.border_width  : 1,
+				"style_border_radius": p.border_radius != null ? p.border_radius : 0,
+				"style_padding_y":     p.padding_y     != null ? p.padding_y     : 0,
+				"style_padding_x":     p.padding_x     != null ? p.padding_x     : 0,
+				"style_margin_y":      p.margin_y      != null ? p.margin_y      : 0,
+				"style_margin_x":      p.margin_x      != null ? p.margin_x      : 0
+			};
+			jQuery.each( _numFields, function( key, val ) {
+				var $num = jQuery("#wpadcb-field-" + key);
+				$num.val( val );
+				$num.siblings(".wpadcb-style-slider").val( val );
+			});
+			jQuery("#wpadcb-field-style_preset").val( slug );
+			updateActivePresetUI( slug );
+			updateAppearancePreview();
+			setTimeout( function() { _applyingPreset = false; }, 0 );
+		}
+
+		function updateActivePresetUI( slug ) {
+			jQuery(".wpadcb-preset-btn").removeClass("wpadcb-active");
+			jQuery('.wpadcb-preset-btn[data-preset="' + slug + '"]').addClass("wpadcb-active");
+		}
+
+		function updateAppearancePreview() {
+			var $preview = jQuery(".wpadcb-style-preview-inner");
+			if ( ! $preview.length ) return;
+			var bg = jQuery("#wpadcb-field-style_bg_color").val() || "transparent";
+			var text = jQuery("#wpadcb-field-style_text_color").val() || "inherit";
+			var bColor = jQuery("#wpadcb-field-style_border_color").val() || "transparent";
+			var bStyle = jQuery("#wpadcb-field-style_border_style").val() || "none";
+			var bWidth = parseInt( jQuery("#wpadcb-field-style_border_width").val(), 10 ) || 0;
+			var bRadius = parseInt( jQuery("#wpadcb-field-style_border_radius").val(), 10 ) || 0;
+			var pY = parseInt( jQuery("#wpadcb-field-style_padding_y").val(), 10 ) || 0;
+			var pX = parseInt( jQuery("#wpadcb-field-style_padding_x").val(), 10 ) || 0;
+			var mY = parseInt( jQuery("#wpadcb-field-style_margin_y").val(), 10 ) || 0;
+			var mX = parseInt( jQuery("#wpadcb-field-style_margin_x").val(), 10 ) || 0;
+
+			$preview.css({
+				"background-color": bg,
+				"color": text,
+				"border": (bStyle === "none" || bWidth === 0) ? "none" : (bWidth + "px " + bStyle + " " + bColor),
+				"border-radius": bRadius + "px",
+				"padding": pY + "px " + pX + "px",
+				"margin": mY + "px " + mX + "px"
+			});
+		}
+
+		jQuery(document).on( "click" , ".wpadcb-preset-btn", function(e) {
+			e.preventDefault();
+			var slug = jQuery(this).attr("data-preset");
+			if ( ! slug || slug === "custom" ) return;
+
+			var currentPreset = jQuery("#wpadcb-field-style_preset").val();
+			if ( currentPreset === "custom" ) {
+				var presetLabel = jQuery(this).text().trim();
+				var $bar = jQuery(".wpadcb-preset-confirm");
+				$bar.find(".wpadcb-preset-confirm-msg")
+					.text( 'Apply "' + presetLabel + '" and discard your custom settings?' );
+				$bar.data( "pending-preset", slug )
+					.css( "display", "flex" ).hide().slideDown( 180 );
+			} else {
+				applyPresetToFields( slug );
+			}
+		});
+
+		jQuery(document).on( "click", ".wpadcb-preset-confirm-yes", function() {
+			var $bar = jQuery(".wpadcb-preset-confirm");
+			var slug = $bar.data("pending-preset");
+			$bar.slideUp( 180 );
+			if ( slug ) applyPresetToFields( slug );
+		});
+
+		jQuery(document).on( "click", ".wpadcb-preset-confirm-cancel", function() {
+			jQuery(".wpadcb-preset-confirm").slideUp( 180 );
+		});
+
+		jQuery(document).on( "input change" , ".wpadcb-style-control", function() {
+			// Editing any field switches preset to "custom"
+			var $hidden = jQuery("#wpadcb-field-style_preset");
+			var current = $hidden.val();
+			if ( current && current !== "custom" ) {
+				$hidden.val("custom");
+				updateActivePresetUI("custom");
+			}
+			updateAppearancePreview();
+		});
+
+		// Slider ↔ number input sync (appearance section)
+		jQuery(document).on( "input", ".wpadcb-appearance-section .wpadcb-style-slider", function() {
+			var $slider = jQuery(this),
+				$num = $slider.siblings("input[type='number']");
+			$num.val( $slider.val() ).trigger("input").trigger("change");
+		});
+		jQuery(document).on( "input change", ".wpadcb-appearance-section input[type='number'].wpadcb-style-control", function() {
+			var $num = jQuery(this),
+				$slider = $num.siblings(".wpadcb-style-slider");
+			if ( $slider.length ) $slider.val( $num.val() );
+		});
+
+		// Customize appearance toggle — show/hide the body
+		jQuery(document).on( "change", "#wpadcb-field-customize_appearance", function() {
+			var $body = jQuery(".wpadcb-appearance-body");
+			if ( jQuery(this).is(":checked") ) {
+				$body.slideDown( 200 );
+			} else {
+				$body.slideUp( 200 );
+			}
+		});
+
+		// Initial preview render + wp-color-picker init for new color inputs
+		if ( jQuery(".wpadcb-style-preview-inner").length ) {
+			if ( jQuery.fn.wpColorPicker ) {
+				jQuery("#wpadcb-field-style_bg_color, #wpadcb-field-style_text_color, #wpadcb-field-style_border_color").wpColorPicker({
+					change: function() {
+						setTimeout( updateAppearancePreview, 0 );
+						setTimeout( function() {
+							if ( _applyingPreset ) return;
+							var $hidden = jQuery("#wpadcb-field-style_preset");
+							if ( $hidden.val() && $hidden.val() !== "custom" ) {
+								$hidden.val("custom");
+								updateActivePresetUI("custom");
+							}
+						}, 0 );
+					},
+					clear: function() {
+						setTimeout( updateAppearancePreview, 0 );
+					}
+				});
+			}
+			updateAppearancePreview();
+			updateActivePresetUI( jQuery("#wpadcb-field-style_preset").val() || "" );
+		}
+
 		// powertip
 		featureDisabledTip();
 

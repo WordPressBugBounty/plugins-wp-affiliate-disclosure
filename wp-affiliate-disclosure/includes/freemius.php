@@ -18,19 +18,20 @@ function wp_affiliate_disclosure_fs() {
         // Include Freemius SDK.
         require_once WPADC_PATH . '/freemius/start.php';
         $wp_affiliate_disclosure_fs = fs_dynamic_init( array(
-            'id'             => '2803',
-            'slug'           => 'wp-affiliate-disclosure',
-            'type'           => 'plugin',
-            'public_key'     => 'pk_edcefd8745b43aea096decf73f8bf',
-            'is_premium'     => false,
-            'has_addons'     => false,
-            'has_paid_plans' => true,
-            'menu'           => array(
+            'id'               => '2803',
+            'slug'             => 'wp-affiliate-disclosure',
+            'type'             => 'plugin',
+            'public_key'       => 'pk_edcefd8745b43aea096decf73f8bf',
+            'is_premium'       => false,
+            'has_addons'       => false,
+            'has_paid_plans'   => true,
+            'menu'             => array(
                 'slug'    => 'wpadc-builder',
                 'contact' => false,
                 'support' => false,
             ),
-            'is_live'        => true,
+            'is_live'          => true,
+            'is_org_compliant' => true,
         ) );
     }
     return $wp_affiliate_disclosure_fs;
